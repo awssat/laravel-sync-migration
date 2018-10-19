@@ -28,7 +28,7 @@
   },
   "autoload": {
     "psr-4": {
-      "awssat\\Visits\\": "src"
+      "Awssat\\SyncMigration\\": "src"
     }
   },
   "scripts": {
