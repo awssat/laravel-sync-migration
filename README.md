@@ -27,8 +27,8 @@ It's a tool to help ease the repetitive migration process during developing a La
   
   
 ## Features
-- Easy install, no need to add or change your schemas or project files.
-- Sync schemas changes to database instantly. No need to repeat fresh or seed commands everytime.
+- Easy to install, no need to add or change your schemas or project files.
+- Sync schema changes to database instantly. No need to repeat fresh or seed commands everytime.
 - Interactive. It will give you choices to not force unwanted changes to your database.
 
 
@@ -37,7 +37,7 @@ It's a tool to help ease the repetitive migration process during developing a La
 ## Install
 
 Via Composer
-``` bash
+```bash
 composer require awssat/laravel-sync-migration
 ```
 
