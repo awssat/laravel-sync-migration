@@ -43,7 +43,7 @@ composer require awssat/laravel-sync-migration
 
 
 #### Before Laravel 5.5
-In Laravel 5.4. you'll manually need to register the `Awssat\SyncMigration::class` service provider in `config/app.php`.
+In Laravel 5.4. you'll manually need to register the `Awssat\SyncMigration\SyncMigrationServiceProvider::class` service provider in `config/app.php`.
 
 
 ## Usage
