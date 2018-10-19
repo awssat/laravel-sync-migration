@@ -54,6 +54,11 @@ php artisan migrate:sync
 ```
 
 
+<p align="center"> 
+    <img src="https://thumbs.gfycat.com/SplendidFlatAustrianpinscher-size_restricted.gif" alt="Laravel Sync Migration">
+</p>
+
+
 ## Contributing
 
 You are very welcome to contribute and improve this package.
