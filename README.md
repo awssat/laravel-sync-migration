@@ -1,7 +1,8 @@
 # Laravel Sync Migration
 
-
-![laravel-sync-migration](https://i.imgur.com/OP83jHA.jpg)
+<p align="center"> 
+    <img src="https://i.imgur.com/OP83jHA.jpg" alt="Laravel Sync Migration">
+</p>
 
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
