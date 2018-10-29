@@ -11,6 +11,7 @@ class Schema
 {
     public $schema;
     public $name;
+    public $table;
     public $writeIn;
     public $synced = false;
 
@@ -23,12 +24,13 @@ class Schema
     {
         $this->schema = $schema;
         $this->name = $this->getName($schema->group(1));
+        $this->table = DB::getTablePrefix() . $this->name;
         $this->writeIn = $writeIn;
     }
 
     public function process()
     {
-        $action = DB::getSchemaBuilder()->hasTable($this->name) ? 'sync' : 'create';
+        $action = $this->tabeExist() ? 'sync' : 'create';
 
         $this->$action();
     }
@@ -42,14 +44,14 @@ class Schema
     protected function create()
     {
         if($this->columnsList()->isEmpty()) {
-            return $this->output()->error("Table <fg=black;bg=white> {$this->name} </> does not have any columns");
+            return $this->output()->error("Table <fg=black;bg=white> {$this->table} </> does not have any columns");
         }
 
         LaravelSchema::create($this->name, function (Blueprint $table) {
             eval($this->schema->group(2));
         });
 
-        $this->output()->warn("New table <fg=white;bg=red> {$this->name} </> was created");
+        $this->output()->warn("New table <fg=white;bg=red> {$this->table} </> was created");
     }
 
     protected function sync()
@@ -59,7 +61,7 @@ class Schema
         }
 
         $this->dbUnsyncedColumns()->each(function ($type, $column)  {
-            $this->output()->info("Column <fg=black;bg=yellow> {$this->name}->{$column} </> is renamed or deleted !!");
+            $this->output()->info("Column <fg=black;bg=yellow> {$this->table}->{$column} </> is renamed or deleted !!");
             $action = $this->output()->choice('What we should do ?', $this->syncChoices(), 0);
 
             (new Column($this))->$action($column);
@@ -72,8 +74,8 @@ class Schema
 
     protected function dropSchema()
     {
-        $this->output()->error("Table <fg=black;bg=yellow> {$this->name} </> does not have any columns");
-        $this->output()->confirm("Do you want to drop <fg=white;bg=red> {$this->name} </> ?",
+        $this->output()->error("Table <fg=black;bg=yellow> {$this->table} </> does not have any columns");
+        $this->output()->confirm("Do you want to drop <fg=white;bg=red> {$this->table} </> ?",
             true) && LaravelSchema::dropIfExists($this->name);
     }
 
@@ -114,7 +116,8 @@ class Schema
 
     protected function dbColumns()
     {
-        return collect(DB::select('DESCRIBE ' . $this->name))->mapWithKeys(function ($column) {
+        return collect(DB::select('DESCRIBE ' . $this->table))
+            ->mapWithKeys(function ($column) {
             return [$column->Field => $column->Type];
         });
     }
@@ -151,5 +154,10 @@ class Schema
             'timestampsTz' => ['created_at', 'updated_at'],
             'morphs' => ["{$column}_id", "{$column}_type"],
         ];
+    }
+    
+    protected function tabeExist()
+    {
+        return DB::getSchemaBuilder()->hasTable($this->name);
     }
 }

@@ -100,6 +100,13 @@ class SyncMigrateCommand extends BaseCommand
      */
     protected function abondedTables()
     {
-        return $this->tables()->diff($this->schemas->pluck('name')->push('migrations'));
+        return $this->tables()->diff($this->schemasTables());
+    }
+
+    protected function schemasTables()
+    {
+        return $this->schemas->pluck('name')->push('migrations')->map(function ($name) {
+            return DB::getTablePrefix() . $name;
+        });
     }
 }
