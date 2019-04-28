@@ -23,9 +23,10 @@ class Schema
     public function __construct($schema, SyncMigrateCommand $writeIn)
     {
         $this->schema = $schema;
+        $this->writeIn = $writeIn;
+
         $this->name = $this->getName($schema->group(1));
         $this->table = DB::getTablePrefix() . $this->name;
-        $this->writeIn = $writeIn;
     }
 
     public function process()
@@ -51,7 +52,7 @@ class Schema
             eval($this->schema->group(2));
         });
 
-        $this->output()->warn("New table <fg=white;bg=red> {$this->table} </> was created");
+        $this->output()->warn("New table <fg=white;bg=green> {$this->table} </> was created");
     }
 
     protected function sync()
@@ -86,6 +87,12 @@ class Schema
 
     protected function getName($name)
     {
+        //TODO: https://github.com/awssat/laravel-sync-migration/issues/2
+        if(preg_match('/[\'|"]\s?\.\s?\$/', $name) || preg_match('/\$[a-zA-z0-9-_]+\s?\.\s?[\'|"]/', $name)) {
+            $this->output()->error("Using variables as table names (<fg=black;bg=white> {$name} </>) is not supported currentlly, see <href=https://github.com/awssat/laravel-sync-migration/issues/2> issue#2 </>");
+            exit;
+        }
+
         return str_replace(['\'', '"'], '', $name);
     }
 
