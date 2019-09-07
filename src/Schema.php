@@ -3,9 +3,11 @@
 namespace Awssat\SyncMigration;
 
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Spatie\Regex\Regex;
 use Illuminate\Support\Facades\Schema as LaravelSchema;
+use Illuminate\Support\Str;
 
 class Schema
 {
@@ -123,7 +125,7 @@ class Schema
 
     protected function dbColumns()
     {
-        return collect(DB::select('DESCRIBE ' . $this->table))
+        return Collection::make(DB::select('DESCRIBE ' . $this->table))
             ->mapWithKeys(function ($column) {
             return [$column->Field => $column->Type];
         });
@@ -131,10 +133,10 @@ class Schema
 
     protected function columnsList()
     {
-        return collect(explode(';', $this->schema->group(2)))->mapWithKeys(function ($line) {
+        return Collection::make(explode(';', $this->schema->group(2)))->mapWithKeys(function ($line) {
             $line = trim($line);
 
-            if(starts_with($line, ['//', '#', '/*'])) {
+            if(Str::startsWith($line, ['//', '#', '/*'])) {
                 return [];
             }
 

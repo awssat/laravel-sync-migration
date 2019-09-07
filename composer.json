@@ -1,10 +1,10 @@
 {
   "name": "awssat/laravel-sync-migration",
   "type": "library",
-  "description": "Developer tool helps to sync migrations without refreshing the database",
+  "description": "Laravel tool helps to sync migrations without refreshing the database",
   "keywords": [
     "Laravel",
-    "Developer",
+    "Migration",
     "Tool",
     "Package",
     "Sync",
@@ -21,8 +21,8 @@
     }
   ],
   "require": {
-    "php": "~5.6|~7.0",
-    "illuminate/support": "5.6.* || 5.7.* || 5.8.*",
+    "php": "~7.1",
+    "illuminate/support": "5.6.* || 5.7.* || 5.8.* || ^6.0",
     "spatie/regex": "^1.4",
     "doctrine/dbal": "^2.9"
   },

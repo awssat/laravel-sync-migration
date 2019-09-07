@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Regex\Regex;
 use Illuminate\Database\Console\Migrations\BaseCommand;
 use Illuminate\Database\Migrations\Migrator;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema as LaravelSchema;
 
 class SyncMigrateCommand extends BaseCommand
@@ -43,7 +44,7 @@ class SyncMigrateCommand extends BaseCommand
     {
         parent::__construct();
 
-        $this->schemas = collect();
+        $this->schemas = Collection::make();
         $this->migrator = $migrator;
     }
 
@@ -74,7 +75,7 @@ class SyncMigrateCommand extends BaseCommand
 
     protected function tables()
     {
-        return collect(DB::select('SHOW TABLES'))->map(function ($table) {
+        return Collection::make(DB::select('SHOW TABLES'))->map(function ($table) {
             return array_values((array)$table);
         })->flatten();
     }
