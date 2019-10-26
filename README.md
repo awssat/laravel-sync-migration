@@ -12,56 +12,13 @@
 [![Total Downloads][ico-downloads]][link-downloads]
 
 
-## Introduction
 It's a tool to help ease the repetitive migration process during developing a Laravel project without migrate:fresh your database every time you change you schemas.
 
 
-## Table of Contents
-  * [Features](#features)
-  * [Install](#install)
-  * [Usage](#usage)
-  * [Contributing](#contributing)
-  * [Credits](#credits)
-  * [License](#license)
-  
-  
-  
-## Features
-- Easy to install, no need to add or change your schemas or project files.
-- Sync schema changes to database instantly. No need to repeat fresh or seed commands everytime.
-- Interactive. It will give you choices to not force unwanted changes to your database.
 
+## Docs
+You can start reading the docs of Laravel Sync Migration on our website [ [docs](https://awssat.com/opensource/laravel-sync-migration) ].
 
-
-
-## Install
-
-Via Composer
-```bash
-composer require awssat/laravel-sync-migration
-```
-
-
-#### Before Laravel 5.5
-In Laravel 5.4. you'll manually need to register the `Awssat\SyncMigration\SyncMigrationServiceProvider::class` service provider in `config/app.php`.
-
-
-## Usage
-
-It's simple. Anytime you want sync schema files to database run this command:
-```
-php artisan migrate:sync
-```
-
-
-<p align="center"> 
-    <img src="https://thumbs.gfycat.com/SplendidFlatAustrianpinscher-size_restricted.gif" alt="Laravel Sync Migration">
-</p>
-
-
-## Contributing
-
-You are very welcome to contribute and improve this package.
 
 
 ## Credits
