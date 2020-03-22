@@ -156,12 +156,17 @@ class Schema
     protected function columnsTypes($column)
     {
         return  [
+            'id' => ['id'],
             'rememberToken' => ['remember_token'],
             'softDeletes' => ['deleted_at'],
             'softDeletesTz' => ['deleted_at'],
             'timestamps' => ['created_at', 'updated_at'],
             'timestampsTz' => ['created_at', 'updated_at'],
+            'nullableTimestamps' => ['created_at', 'updated_at'],
             'morphs' => ["{$column}_id", "{$column}_type"],
+            'uuidMorphs' => ["{$column}_id", "{$column}_type"],
+            'nullableUuidMorphs' => ["{$column}_id", "{$column}_type"],
+            'nullableMorphs' => ["{$column}_id", "{$column}_type"],
         ];
     }
     
