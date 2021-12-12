@@ -1,8 +1,3 @@
----
-prev: ./
-next: 2_installation
----
-
 # Introduction
 
 It's a tool to help ease the repetitive migration process during developing a Laravel project without migrate:fresh your database every time you change you schemas.

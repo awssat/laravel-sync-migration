@@ -1,8 +1,3 @@
----
-prev: 1_introduction
-next: 2_quick-start
----
-
 # Installation
 
 To get started, use Composer to add the package to your project's dependencies:
@@ -22,5 +17,5 @@ In Laravel 5.4. you'll manually need to register the `Awssat\SyncMigration\SyncM
 </p>
 
 <p align="right">
-  Next:  <a href="4_quick-start.md">Quick start ></a> 
+  Next:  <a href="3_quick-start.md">Quick start ></a> 
 </p>
