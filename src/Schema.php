@@ -144,7 +144,7 @@ class Schema
                 $column = Regex::match('~(["\'])([^"\']+)\1~', $line);
                 $column = $column->hasMatch() ? $column->group(2) : null;
                 $types = $this->columnsTypes($column);
-                $type = Regex::match('/\$.*->(.*)\(/', $line)->group(1);
+                $type = Regex::match('/\$.*?->(.*?)\(/', $line)->group(1);
 
                 return [$line => in_array($type, array_keys($types)) ? $types[$type] : [$column]];
             } catch (\Exception $e) {
