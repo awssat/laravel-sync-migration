@@ -23,7 +23,7 @@ class SyncMigrateCommand extends BaseCommand
      *
      * @var string
      */
-    protected $signature = 'migrate:sync';
+    protected $signature = 'migrate:sync {file?}';
     /**
      * The console command description.
      *
@@ -53,17 +53,44 @@ class SyncMigrateCommand extends BaseCommand
      */
     public function handle()
     {
-        $files = $this->migrator->getMigrationFiles($this->getMigrationPaths());
 
-        foreach ($files as $file) {
+        //if file option is given. 
+        $file = $this->argument('file');
+        if (!empty($file)) {
+            $file = rtrim($file, '.php') . '.php';
+            $fileExists = true;
+            if (!file_exists($file)) {
+                $fileExists = false;
+                foreach ($this->getMigrationPaths() as $path) {
+                    if (file_exists($path . '/' . $file)) {
+                        $file = $path . '/' . $file;
+                        $fileExists = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!$fileExists) {
+                $this->error("File not found: $file");
+                return;
+            }
+
             $this->processMigration(file_get_contents($file));
+        } else {
+            $files = $this->migrator->getMigrationFiles($this->getMigrationPaths());
+
+            foreach ($files as $file) {
+                $this->processMigration(file_get_contents($file));
+            }
         }
 
         $this->abondedTables()->each(function ($table) {
             $this->error("Schemas doesn't have table <fg=black;bg=white> {$table} </> seems you have delete it");
 
-            $this->confirm("Do you want to drop <fg=black;bg=white> {$table} </> ?",
-                true) && LaravelSchema::dropIfExists($table);
+            $this->confirm(
+                "Do you want to drop <fg=black;bg=white> {$table} </> ?",
+                true
+            ) && LaravelSchema::dropIfExists($table);
         })->isEmpty() && $this->syncedOrNot();
 
     }
@@ -76,7 +103,7 @@ class SyncMigrateCommand extends BaseCommand
     protected function tables()
     {
         return Collection::make(DB::select('SHOW TABLES'))->map(function ($table) {
-            return array_values((array)$table);
+            return array_values((array) $table);
         })->flatten();
     }
 
